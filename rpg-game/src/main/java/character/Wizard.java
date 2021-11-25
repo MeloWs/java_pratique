@@ -32,6 +32,5 @@ public class Wizard extends Character{
 	}
 }
 	
-	// heal (PV)
-			//heal aléatoire ? ou fixe ? > pv + nb de pv. (si toute sa vie ne marche pas)
+
 	
