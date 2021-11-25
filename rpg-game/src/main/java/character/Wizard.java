@@ -20,10 +20,13 @@ public class Wizard extends Character{
 		this.element = element;
 	} 
 	
-
+	@Override
 	public void getHealed() {
 		addPV = (Math.random()* 10);
 		if (this.getHealth() < 130) {
+			if (this.getHealth() + addPV > 130 ) {
+				this.setHealth(130);
+			}
 			this.setHealth(getHealth() + addPV);
 		}
 	}

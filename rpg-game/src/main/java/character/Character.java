@@ -65,7 +65,6 @@ public abstract class Character implements ICharacter{
 	
 	public double isProtected(Character target) {
 		//this.setCounterAttack(true);
-		System.out.println("You are protected until you decided to attack");
 		
 		if (target.isCounterAttack() == true) {
 			if (target.getClass().getSimpleName() == "Knight") {
@@ -89,11 +88,11 @@ public abstract class Character implements ICharacter{
 			damage = isProtected(target.get(characterId));
 			if (damage >= target.get(characterId).getHealth()) {
 				target.get(characterId).setHealth(0);
+				target.remove(characterId);
 				System.out.println("You killed your enemy");
 			} 
 			else {
 				target.get(characterId).setHealth(target.get(characterId).getHealth() - damage);
-			System.out.println("You've injured your enemy of " + damage + "PV, He/she now had " + target.get(characterId).getHealth() + "PV");
 			}
 			
 		}
@@ -102,6 +101,10 @@ public abstract class Character implements ICharacter{
 	public void counterAttack() {
 		
 		this.setCounterAttack(true);
+		System.out.println("You are protected until you decided to attack");
+	}
+	
+	public void getHealed() {
 		
 	}
 
