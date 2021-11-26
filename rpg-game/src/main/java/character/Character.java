@@ -6,7 +6,7 @@ import player.Player;
 public abstract class Character implements ICharacter{
 	 private String name;
 	 private Player player;
-	 private double health = 130;
+	 private double health = 13;
 	 private boolean counterAttack = false;
 	 private double damage = 5;
 	 
@@ -63,41 +63,38 @@ public abstract class Character implements ICharacter{
 		this.damage = damage;
 	}
 	
-	public double isProtected(Character target) {
-		//this.setCounterAttack(true);
-		
-		if (target.isCounterAttack() == true) {
-			if (target.getClass().getSimpleName() == "Knight") {
-				damage = 0;
-				System.out.println("Your enemy is protected, you can't hit him.");
-			}
-			else {
-				System.out.println("Your enemy is protected, damages are divided by 2.");
-				damage = damage/2;
-			}
-		} 
-		
-		return damage;
-	}
-	
+
 	public void attack(List<Character> target, int characterId) {
-		//characterid = au numéro dans la liste
-		if (target.get(characterId).getHealth() == 0) {
-			System.out.println("You cannot hit your enemy anymore, he/she is already dead");
-		} 
-		else {
-			this.setCounterAttack(false);
-			damage = isProtected(target.get(characterId));
-			if (damage >= target.get(characterId).getHealth()) {
-				target.get(characterId).setHealth(0);
-				target.remove(characterId);
-				System.out.println("You killed your enemy");
+		double hitDamage = this.damage;
+		this.setCounterAttack(false);
+		if (target.get(characterId).isCounterAttack() == true) {
+			if (target.get(characterId).getClass().getSimpleName().equals("Knight")) {
+				System.out.println("Your enemy is protected, you can't hit him.");
+				
 			} 
 			else {
-				target.get(characterId).setHealth(target.get(characterId).getHealth() - damage);
-				System.out.println("You hit " + target.get(characterId).getName()+ " and his health is now " + target.get(characterId).getHealth() );
+				
+				hitDamage = hitDamage / 2;
+				if (hitDamage >= target.get(characterId).getHealth()) {
+					target.get(characterId).setHealth(0);
+					System.out.println("You killed " + target.get(characterId).getName());
+					target.remove(characterId);
+					}
+				else {
+				target.get(characterId).setHealth(target.get(characterId).getHealth() - hitDamage);
+				System.out.println("Your enemy is protected, damages are divided by 2.");
+				}
 			}
-			
+		} else {
+			if (hitDamage >= target.get(characterId).getHealth()) {
+				target.get(characterId).setHealth(0);
+				System.out.println("You killed " + target.get(characterId).getName());
+				target.remove(characterId);
+				}
+			else {
+				target.get(characterId).setHealth(Math.round((target.get(characterId).getHealth() - hitDamage)*10.0)/10.0);
+				System.out.println("you inflicted "+hitDamage+" to "+ target.get(characterId).getName()+" and his health is now " + target.get(characterId).getHealth()+" HP" );
+			}
 		}
 	}
 	
