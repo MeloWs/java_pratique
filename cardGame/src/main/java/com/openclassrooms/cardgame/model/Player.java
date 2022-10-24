@@ -1,7 +1,6 @@
 package com.openclassrooms.cardgame.model;
 
 public class Player {
-
     private String name;
     private Hand hand;
 
@@ -10,7 +9,13 @@ public class Player {
         this.name = name;
         hand = new Hand();
     }
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
     public void addCardToHand(PlayingCard pc){
         hand.addCard(pc);
     }
